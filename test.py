@@ -95,3 +95,4 @@ if __name__=='__main__':
     m.tracePath({agentB:dfssearchpath},delay = 10)
     m.tracePath({agentA:solpath},delay = 10)
     m.run()
+    
