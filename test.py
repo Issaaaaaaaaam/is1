@@ -34,11 +34,11 @@ def greedy(m, start, goal):
                 if d=='S':
                     childCell=(currCell[0]+1,currCell[1])
 
-                temp_f_score=h(childCell,goal)
+                temp_score=h(childCell,goal)
 
-                if temp_f_score < score[childCell]:
-                    score[childCell]= temp_f_score
-                    open.put((temp_f_score,childCell))
+                if temp_score < score[childCell]:
+                    score[childCell]= temp_score
+                    open.put((temp_score,childCell))
                     greedyPath[childCell]=currCell
     path={}
     cell=goal
