@@ -11,17 +11,16 @@ def h(cell1,cell2):
     return abs(x1-x2) + abs(y1-y2)
 
 def greedy(m, start, goal):
-    f_score={cell:float('inf') for cell in m.grid}
-    f_score[start]=h(start,goal)
+    score={cell:float('inf') for cell in m.grid}
+    score[start]=h(start,goal)
 
     open=PriorityQueue()
     open.put((h(start,goal),start))
-    aPath={}
-    asearch = []
+    greedyPath={}
+    greedySearch = []
     while not open.empty():
         currCell=open.get()[1]
-        print(currCell)
-        asearch.append(currCell)
+        greedySearch.append(currCell)
         if currCell==goal:
             break
         for d in 'ESNW':
@@ -37,16 +36,16 @@ def greedy(m, start, goal):
 
                 temp_f_score=h(childCell,goal)
 
-                if temp_f_score < f_score[childCell]:
-                    f_score[childCell]= temp_f_score
+                if temp_f_score < score[childCell]:
+                    score[childCell]= temp_f_score
                     open.put((temp_f_score,childCell))
-                    aPath[childCell]=currCell
-    fwdPath={}
+                    greedyPath[childCell]=currCell
+    path={}
     cell=goal
     while cell!=start:
-        fwdPath[aPath[cell]]=cell
-        cell=aPath[cell]
-    return fwdPath,asearch
+        path[greedyPath[cell]]=cell
+        cell=greedyPath[cell]
+    return path, greedySearch
 
 
 
@@ -58,11 +57,11 @@ def aStar(m, start, goal):
 
     open=PriorityQueue()
     open.put((h(start,goal),h(start,goal),start))
-    aPath={}
-    asearch = []
+    aStarPath={}
+    aStarSearch = []
     while not open.empty():
         currCell=open.get()[2]
-        asearch.append(currCell)
+        aStarSearch.append(currCell)
         if currCell==goal:
             break
         for d in 'ESNW':
@@ -83,13 +82,13 @@ def aStar(m, start, goal):
                     g_score[childCell]= temp_g_score
                     f_score[childCell]= temp_f_score
                     open.put((temp_f_score,h(childCell,goal),childCell))
-                    aPath[childCell]=currCell
-    fwdPath={}
+                    aStarPath[childCell]=currCell
+    path={}
     cell=goal
     while cell!=start:
-        fwdPath[aPath[cell]]=cell
-        cell=aPath[cell]
-    return fwdPath,asearch
+        path[aStarPath[cell]]=cell
+        cell=aStarPath[cell]
+    return path, aStarSearch
 
 
 def DFS(m,start,goal):
