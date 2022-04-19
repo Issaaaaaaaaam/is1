@@ -2,15 +2,16 @@ from random import randint
 from pyamaze import maze,agent,COLOR
 from queue import PriorityQueue
 
+#All the functions have been written in the main functions and commented out. Only run on of the functions at a time to see it running. 
+#You must download the pyamaze library using pip install pyamaze
 
 
-
-def h(cell1,cell2):
+def h(cell1,cell2): #heuristic 
     x1,y1=cell1
     x2,y2=cell2
     return abs(x1-x2) + abs(y1-y2)
 
-def greedy(m, start, goal):
+def greedy(m, start, goal): #greedy algorithm 
     score={cell:float('inf') for cell in m.grid}
     score[start]=h(start,goal)
 
@@ -49,7 +50,7 @@ def greedy(m, start, goal):
 
 
 
-def aStar(m, start, goal):
+def aStar(m, start, goal): #aStar algorithm 
     g_score={cell:float('inf') for cell in m.grid}
     g_score[start]=0
     f_score={cell:float('inf') for cell in m.grid}
@@ -91,7 +92,7 @@ def aStar(m, start, goal):
     return path, aStarSearch
 
 
-def DFS(m,start,goal):
+def DFS(m,start,goal): #DFS algorithm 
 
     explored=[start] # stack to keep track of the explored cells 
     neighbors=[start] # keep track of the neighbors of the current cell 
@@ -130,7 +131,7 @@ def DFS(m,start,goal):
     return path, dfssearch 
 
 
-def BFS(m,start,goal):
+def BFS(m,start,goal): #BFS algorithm 
 
     explored=[start] # stack to keep track of the explored cells 
     neighbors=[start] # keep track of the neighbors of the current cell 
@@ -168,8 +169,72 @@ def BFS(m,start,goal):
     return path, bfssearch 
 
 
+def bfsDemo(): 
+    a = randint(1,25)
+    b = randint(1,25)
+    c = randint(1,25)
+    d = randint(1,25)
+    goal = (a,b)
+    start = (c,d)
+    m=maze(25,25)
+    m.CreateMaze(a,b,loopPercent=100)
+    solPath, bfsSearchPath = aStar(m,start,goal)
+    agentA=agent(m,c,d,footprints=True,filled = True, shape = 'square')
+    agentB=agent(m,c,d,footprints=True, shape='square', color=COLOR.red)
+    m.tracePath({agentB:bfsSearchPath},delay = 10)
+    m.tracePath({agentA:solPath},delay = 10)
+    m.run()
 
-if __name__=='__main__':
+def dfsDemo(): 
+    a = randint(1,25)
+    b = randint(1,25)
+    c = randint(1,25)
+    d = randint(1,25)
+    goal = (a,b)
+    start = (c,d)
+    m=maze(25,25)
+    m.CreateMaze(a,b,loopPercent=100)
+    solPath, dfsSearchPath = aStar(m,start,goal)
+    agentA=agent(m,c,d,footprints=True,filled = True, shape = 'square')
+    agentB=agent(m,c,d,footprints=True, shape='square', color=COLOR.red)
+    m.tracePath({agentB:dfsSearchPath},delay = 10)
+    m.tracePath({agentA:solPath},delay = 10)
+    m.run()
+
+def astarDemo():   
+    a = randint(1,25)
+    b = randint(1,25)
+    c = randint(1,25)
+    d = randint(1,25)
+    goal = (a,b)
+    start = (c,d)
+    m=maze(25,25)
+    m.CreateMaze(a,b,loopPercent=100)
+    solPath, aStarSearchPath = aStar(m,start,goal)
+    agentA=agent(m,c,d,footprints=True,filled = True, shape = 'square')
+    agentB=agent(m,c,d,footprints=True, shape='square', color=COLOR.red)
+    m.tracePath({agentB:aStarSearchPath},delay = 10)
+    m.tracePath({agentA:solPath},delay = 10)
+    m.run()
+
+def greedyDemo(): 
+    a = randint(1,25)
+    b = randint(1,25)
+    c = randint(1,25)
+    d = randint(1,25)
+    goal = (a,b)
+    start = (c,d)
+    m=maze(25,25)
+    m.CreateMaze(a,b,loopPercent=100)
+    solpathA, greedySearchPath = greedy(m,start,goal)
+    agentA=agent(m,c,d,footprints=True,filled = True, shape = 'square')
+    agentB=agent(m,c,d,footprints=True, shape='square', color=COLOR.red)
+    m.tracePath({agentB:greedySearchPath},delay = 10)
+    m.tracePath({agentA:solpathA},delay = 10)
+    m.run()
+
+
+def astarVSgreedy(): #Yellow is the greedy algorithm while red is the A* algorithm 
     a = randint(1,25)
     b = randint(1,25)
     c = randint(1,25)
@@ -189,3 +254,10 @@ if __name__=='__main__':
     m.tracePath({agentD:greedypath},delay = 100)
     m.tracePath({agentC:solpathB},delay = 10)
     m.run()
+
+if __name__=='__main__':
+    #bfsDemo()
+    #dfsDemo()
+    #astarDemo()
+    #greedyDemo()
+    astarVSgreedy()
